@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label for="country">Please, choose your country</label>
+<select name="country" id="country" required>
+    <option value="ru">Russia</option>
+    <option value="ua">Ukraine</option>
+    <option value="us">United States</option>
+</select>
+<label for="category">Please, choose category</label>
+<select name="category" id="category" required>
+    <option value="business">business</option>
+    <option value="entertainment">entertainment</option>
+    <option value="health">health</option>
+    <option value="science">science</option>
+    <option value="sports">sports</option>
+    <option value="technology">technology</option>
+</select>
+<label for="pagesize">Choose news count</label>
+<select name="pagesize" id="pagesize" required>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+</select>
+<button class="submit">Get news</button>
+<div class="news-container"></div>
+<script src="js/script.js"></script>
+</body>
+</html>
