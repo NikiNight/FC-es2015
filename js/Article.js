@@ -22,7 +22,7 @@ export default class Article {
             article.appendChild(this.generateElement('description', elements['description']));
         }
         if (elements['url'] || elements['content'] || elements['urlToImage']) {
-            article.appendChild(this.generateElement('show-more', 'Show More'));
+            article.appendChild(this.generateElement('show-more', 'Show More')).addEventListener('click', () => console.log('click'));
             let body = article.appendChild(this.generateElement('body', ''));
             if(elements['urlToImage']){
                 body.appendChild(this.generateElement('urlToImage', elements['urlToImage']));
@@ -68,7 +68,7 @@ export default class Article {
         switch (key) {
             case 'urlToImage' : elementType =  'img';
             break;
-            case 'title' : elementType = 'h2';
+            case 'title' : elementType = 'h3';
             break;
             case 'url' : elementType = 'a';
             break;
