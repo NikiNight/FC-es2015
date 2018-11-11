@@ -1,4 +1,4 @@
-'use strict';
+import Article from './Article.js';
 
 window.onload = function() {
 
@@ -18,14 +18,11 @@ window.onload = function() {
 
         function handleJSON(respon){
             respon.articles.forEach(function (val) {
-                console.log(val.title);
-                let article = document.createElement('article');
-                let title = document.createElement('h2');
-                title.innerHTML = val.title;
-                article.appendChild(title);
-                newscontainer.appendChild(article);
+                let article = new Article(val);
+                newscontainer.appendChild(article.generateArticle);
+                //let art = createArticle();
             })
         }
-    console.log('finished');
+
     };
 };
