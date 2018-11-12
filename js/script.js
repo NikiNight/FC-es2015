@@ -4,7 +4,10 @@ window.onload = function() {
 
     //Event Listener - submint class button click
     document.querySelector('.submit').onclick = function () {
+
         this.setAttribute('disabled', 'disabled');
+        this.setAttribute('value', 'Loading');
+
         fetch(formApi())
             .then(response => response.json())
             .then(newsjson => handleJSON(newsjson));
@@ -22,6 +25,7 @@ window.onload = function() {
         });
 
         document.querySelector('.submit').removeAttribute('disabled');
+        document.querySelector('.submit').setAttribute('value', 'Get news');
         document.querySelector('.news__title').style.display = "block";
     }
 

@@ -21,19 +21,24 @@ export default class Article {
         if (elements['description']){
             article.appendChild(this.generateElement('description', elements['description']));
         }
-        if (elements['url'] || elements['content'] || elements['urlToImage']) {
-            article.appendChild(this.generateElement('show-more', 'Show More')).addEventListener('click', () => console.log('click'));
+        if (elements['content'] || elements['urlToImage']) {
+
+            article.appendChild(this.generateElement('show-more', 'Show More')).addEventListener('click', () => this.constructor.handleShowmoreClick(article));
+
             let body = article.appendChild(this.generateElement('body', ''));
+
             if(elements['urlToImage']){
                 body.appendChild(this.generateElement('urlToImage', elements['urlToImage']));
             }
             if(elements['content']){
                 body.appendChild(this.generateElement('content', elements['content']));
             }
-            if(elements['url']){
-                body.appendChild(this.generateElement('url', elements['url']));
-            }
         }
+
+        if(elements['url']){
+            article.appendChild(this.generateElement('url', elements['url']));
+        }
+
         return article;
 
     }
@@ -103,5 +108,10 @@ export default class Article {
             default: elementClass = '';
         }
         return elementClass;
+    }
+
+    static handleShowmoreClick(article) {
+        article.querySelector('.article__body').style.display = 'block';
+        article.querySelector('.article_show-more').style.display = 'none';
     }
 }
