@@ -2,11 +2,11 @@ import Article from './Article.js';
 
 window.onload = function() {
 
-    //Event Listener - submint class button click
+    //Event Listener - submit class button click
     document.querySelector('.submit').onclick = function () {
 
         this.setAttribute('disabled', 'disabled');
-        this.setAttribute('value', 'Loading');
+        this.innerHTML = 'Loading';
 
         fetch(formApi())
             .then(response => response.json())
@@ -21,11 +21,11 @@ window.onload = function() {
 
         respon.articles.forEach(function (val) {
             let article = new Article(val);
-            newscontainer.appendChild(article.generateArticle);
+            newscontainer.appendChild(article.generateArticle());
         });
 
         document.querySelector('.submit').removeAttribute('disabled');
-        document.querySelector('.submit').setAttribute('value', 'Get news');
+        document.querySelector('.submit').innerHTML = 'Get news';
         document.querySelector('.news__title').style.display = "block";
     }
 

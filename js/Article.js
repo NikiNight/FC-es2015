@@ -8,41 +8,51 @@ export default class Article {
         this.url = url;
     };
 
-    get generateArticle(){
+    //Article generator
+    generateArticle(){
+        let template = '';
         let article = document.createElement('article');
         article.className = 'article';
+
         let elements = this.constructor.checkResponceContent(this);
         if (elements['author']){
-            article.appendChild(this.generateElement('author', elements['author']));
+            template += `<p class="article__author">${this.author}</p>`;
         }
         if (elements['title']){
-            article.appendChild(this.generateElement('title', elements['title']));
+            template += `<h3 class="article__title">${this.title}</h3>`;
         }
         if (elements['description']){
-            article.appendChild(this.generateElement('description', elements['description']));
+            template += `<p class="article__description">${this.description}</p>`;
         }
         if (elements['content'] || elements['urlToImage']) {
 
-            article.appendChild(this.generateElement('show-more', 'Show More')).addEventListener('click', () => this.constructor.handleShowmoreClick(article));
-
-            let body = article.appendChild(this.generateElement('body', ''));
+            template += `<button class="article_show-more">Show More</button><div class="article__body">`;
 
             if(elements['urlToImage']){
-                body.appendChild(this.generateElement('urlToImage', elements['urlToImage']));
+                template += `<img class="article__img" src="${this.urlToImage}">`;
             }
             if(elements['content']){
-                body.appendChild(this.generateElement('content', elements['content']));
+                template += `<p class="article__content">${this.content}</p>`;
             }
+
+            template += `</div>`
         }
 
         if(elements['url']){
-            article.appendChild(this.generateElement('url', elements['url']));
+            template += `<a class="article__href" href="${this.url}" target="_blank">Show Source</a>`
+        }
+
+        article.innerHTML=template;
+
+        if(elements['content'] || elements['urlToImage']){
+            article.querySelector('.article_show-more').addEventListener('click', () => this.constructor.handleShowmoreClick(article));
         }
 
         return article;
 
     }
 
+    //Check response content for null value
     static checkResponceContent(object){
         let articleContent = {};
         for (let key in object) {
@@ -53,65 +63,9 @@ export default class Article {
         return articleContent;
     }
 
-    generateElement(key, value) {
-        let element = document.createElement(this.constructor.getElementType(key));
-        element.className = (this.constructor.getElementClass(key));
-        if(key === 'urlToImage'){
-            element.setAttribute('src', value);
-        } else if (key === 'url') {
-            element.setAttribute('href', value);
-            element.setAttribute('target', '_blank');
-            element.innerHTML = 'Show Source';
-        } else {
-            element.innerHTML = value;
-        }
-        return element;
-    }
-
-    static getElementType(key){
-        let elementType;
-        switch (key) {
-            case 'urlToImage' : elementType =  'img';
-            break;
-            case 'title' : elementType = 'h3';
-            break;
-            case 'url' : elementType = 'a';
-            break;
-            case 'show-more' : elementType = 'button';
-            break;
-            case 'body' : elementType = 'div';
-            break;
-            default: elementType = 'p';
-        }
-        return elementType;
-    }
-
-    static getElementClass(key){
-        let elementClass;
-        switch (key) {
-            case 'author' : elementClass = 'article__author';
-                break;
-            case 'title' : elementClass = 'article__title';
-                break;
-            case 'description' : elementClass = 'article__description';
-                break;
-            case 'urlToImage' : elementClass = 'article__img';
-                break;
-            case 'content' : elementClass = 'article__content';
-                break;
-            case 'url' : elementClass = 'article__href';
-                break;
-            case 'show-more' : elementClass = 'article_show-more';
-                break;
-            case 'body' : elementClass = 'article__body';
-                break;
-            default: elementClass = '';
-        }
-        return elementClass;
-    }
-
+    //Event listener for show more button
     static handleShowmoreClick(article) {
-        article.querySelector('.article__body').style.display = 'block';
-        article.querySelector('.article_show-more').style.display = 'none';
+         article.querySelector('.article__body').style.display = 'block';
+         article.querySelector('.article_show-more').style.display = 'none';
     }
 }
