@@ -13,54 +13,41 @@ export default class Article {
         let template = '';
         let article = document.createElement('article');
         article.className = 'article';
-
-        let elements = this.constructor.checkResponceContent(this);
-        if (elements['author']){
+        if (this.author){
             template += `<p class="article__author">${this.author}</p>`;
         }
-        if (elements['title']){
+        if (this.title){
             template += `<h3 class="article__title">${this.title}</h3>`;
         }
-        if (elements['description']){
+        if (this.description){
             template += `<p class="article__description">${this.description}</p>`;
         }
-        if (elements['content'] || elements['urlToImage']) {
+        if (this.content || this.urlToImage) {
 
             template += `<button class="article_show-more">Show More</button><div class="article__body">`;
 
-            if(elements['urlToImage']){
+            if(this.urlToImage){
                 template += `<img class="article__img" src="${this.urlToImage}">`;
             }
-            if(elements['content']){
+            if(this.content){
                 template += `<p class="article__content">${this.content}</p>`;
             }
 
             template += `</div>`
         }
 
-        if(elements['url']){
+        if(this.url){
             template += `<a class="article__href" href="${this.url}" target="_blank">Show Source</a>`
         }
 
         article.innerHTML=template;
 
-        if(elements['content'] || elements['urlToImage']){
-            article.querySelector('.article_show-more').addEventListener('click', () => this.constructor.handleShowmoreClick(article));
+        if(this.content || this.urlToImage){
+            article.querySelector('.article_show-more').addEventListener('click', () => Article.handleShowmoreClick(article));
         }
 
         return article;
 
-    }
-
-    //Check response content for null value
-    static checkResponceContent(object){
-        let articleContent = {};
-        for (let key in object) {
-            if (object.hasOwnProperty(key)) {
-                articleContent[key] = object[key];
-            }
-        }
-        return articleContent;
     }
 
     //Event listener for show more button

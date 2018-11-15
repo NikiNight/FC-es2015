@@ -10,7 +10,8 @@ window.onload = function() {
 
         fetch(formApi())
             .then(response => response.json())
-            .then(newsjson => handleJSON(newsjson));
+            .then(newsjson => handleJSON(newsjson))
+            .catch(err => alert('Error. Try again later'));
     };
 
     //Show last articles in markup container
